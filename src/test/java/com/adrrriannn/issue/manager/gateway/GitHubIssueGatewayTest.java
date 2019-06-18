@@ -5,19 +5,15 @@ import com.adrrriannn.issue.manager.dto.IssueDto;
 import com.adrrriannn.issue.manager.mapper.GitHubIssueMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -47,12 +43,16 @@ public class GitHubIssueGatewayTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         gitHubIssueGateway = new GitHubIssueGateway(restTemplate, issueMapper, gitHubIssuesUrl);
+
+        doReturn(ISSUE_DTO).when(issueMapper).map(GIT_HUB_ISSUE_DTO);
+        doReturn(GIT_HUB_ISSUE_DTO).when(issueMapper).map(ISSUE_DTO);
+
         doReturn(ResponseEntity.ok(Arrays.asList(GIT_HUB_ISSUE_DTO))).when(restTemplate).exchange(anyString(),
                 eq(HttpMethod.GET),
                 eq(null),
                 eq(new ParameterizedTypeReference<List<GitHubIssueDto>>(){}));
-        doReturn(ResponseEntity.ok(GIT_HUB_ISSUE_DTO)).when(restTemplate).getForEntity(gitHubIssuesUrl, GitHubIssueDto.class);
-        doReturn(ResponseEntity.ok(GIT_HUB_ISSUE_DTO)).when(restTemplate).postForEntity(gitHubIssuesUrl, GIT_HUB_ISSUE_DTO, GitHubIssueDto.class);
+        doReturn(ResponseEntity.ok(GIT_HUB_ISSUE_DTO)).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(ResponseEntity.ok(GIT_HUB_ISSUE_DTO)).when(restTemplate).postForEntity(anyString(), any(GitHubIssueDto.class), any(Class.class));
         doNothing().when(restTemplate).delete(gitHubIssuesUrl);
     }
 
@@ -69,14 +69,14 @@ public class GitHubIssueGatewayTest {
     @Test
     public void getIssue() throws Exception {
         gitHubIssueGateway.getIssue("someId");
-        verify(restTemplate).exchange(anyString(), any(HttpMethod.class), null, GitHubIssueDto.class, any(Map.class));
+        verify(restTemplate).getForEntity(anyString(), any(Class.class));
     }
 
     @Test
     public void createIssue() throws Exception {
         gitHubIssueGateway.createIssue(ISSUE_DTO);
         verify(issueMapper).map(ISSUE_DTO);
-        verify(restTemplate).postForEntity(anyString(), any(GitHubIssueDto.class), GitHubIssueDto.class, new HashMap<>());
+        verify(restTemplate).postForEntity(anyString(), any(GitHubIssueDto.class), any(Class.class));
     }
 
     @Test
