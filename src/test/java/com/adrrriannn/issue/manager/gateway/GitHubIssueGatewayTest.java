@@ -37,7 +37,7 @@ public class GitHubIssueGatewayTest {
     private GitHubIssueGateway gitHubIssueGateway;
 
     private static final IssueDto ISSUE_DTO = IssueDto.builder().id("someId").build();
-    private static final GitHubIssueDto GIT_HUB_ISSUE_DTO = GitHubIssueDto.builder().id("someId").build();
+    private static final GitHubIssueDto GIT_HUB_ISSUE_DTO = GitHubIssueDto.builder().number("someId").build();
 
     @Before
     public void setUp() {

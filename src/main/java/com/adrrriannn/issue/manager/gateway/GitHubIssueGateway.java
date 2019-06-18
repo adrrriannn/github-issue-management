@@ -53,12 +53,13 @@ public class GitHubIssueGateway implements IssueGateway {
     @Override
     public IssueDto getIssue(String user, String repo, String id) {
         Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("number", id);
         uriParams.put("user", user);
         uriParams.put("repo", repo);
-        String url = UriComponentsBuilder.fromUriString(gitHubIssueApiUrl).build(uriParams).toString();
+        String url = UriComponentsBuilder.fromUriString(gitHubIssueApiUrl + "/{number}").build(uriParams).toString();
 
         ResponseEntity<GitHubIssueDto> responseEntity =
-                restTemplate.getForEntity(url + id, GitHubIssueDto.class);
+                restTemplate.getForEntity(url, GitHubIssueDto.class);
         
         return gitHubIssueMapper.map(responseEntity.getBody()); 
     }

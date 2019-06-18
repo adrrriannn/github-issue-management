@@ -13,16 +13,16 @@ import java.util.List;
 @AllArgsConstructor
 public class GitHubIssueDto {
     @Getter
-    private String id;
+    private String number;
 
     @Getter
-    private String tittle;
+    private String title;
 
     @Getter
     private String body;
 
     @Getter
-    private List<String> asignees;
+    private List<String> assignees;
 
     @Getter
     private List<String> labels;

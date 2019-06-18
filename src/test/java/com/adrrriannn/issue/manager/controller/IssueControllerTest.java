@@ -46,7 +46,7 @@ public class IssueControllerTest {
 
     @Test
     public void getIssue() {
-        IssueDto issueDto = issueController.getIssue("user", "repo","id");
+        IssueDto issueDto = issueController.getIssue("user", "repo","number");
         Mockito.verify(issueService).getIssue(anyString(), anyString(), anyString());
     }
 

@@ -23,7 +23,7 @@ public class IssueDto {
     private String description;
 
     @Getter
-    private List<String> asignees;
+    private List<String> assignees;
 
     @Getter
     private List<String> labels;

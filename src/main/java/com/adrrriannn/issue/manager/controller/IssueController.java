@@ -19,8 +19,8 @@ public class IssueController {
         this.issueService = issueService;
     }
 
-    @GetMapping("/{id}")
-    public IssueDto getIssue(@PathVariable("id") String id, @RequestParam("user") String user, @RequestParam("repo") String repo) {
+    @GetMapping("/{number}")
+    public IssueDto getIssue(@PathVariable("number") String id, @RequestParam("user") String user, @RequestParam("repo") String repo) {
         return issueService.getIssue(user, repo, id);
     }
 

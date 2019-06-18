@@ -49,7 +49,7 @@ public class IssueServiceImplTest {
 
     @Test
     public void getIssue() {
-        IssueDto issueDto = issueService.getIssue("user", "repo", "id");
-        Mockito.verify(issueGateway).getIssue("user", "repo", "id");
+        IssueDto issueDto = issueService.getIssue("user", "repo", "number");
+        Mockito.verify(issueGateway).getIssue("user", "repo", "number");
     }
 }

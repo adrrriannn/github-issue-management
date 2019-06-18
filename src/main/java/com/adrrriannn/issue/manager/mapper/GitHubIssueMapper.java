@@ -13,10 +13,10 @@ public class GitHubIssueMapper implements IssueMapper<GitHubIssueDto> {
     @Override
     public IssueDto map(GitHubIssueDto externalIssueDto) {
         return IssueDto.builder()
-                .id(externalIssueDto.getId())
-                .title(externalIssueDto.getTittle())
+                .id(externalIssueDto.getNumber())
+                .title(externalIssueDto.getTitle())
                 .description(externalIssueDto.getBody())
-                .asignees(externalIssueDto.getAsignees())
+                .assignees(externalIssueDto.getAssignees())
                 .labels(externalIssueDto.getLabels())
                 .build();
     }
@@ -24,10 +24,10 @@ public class GitHubIssueMapper implements IssueMapper<GitHubIssueDto> {
     @Override
     public GitHubIssueDto map(IssueDto issueDto) {
         return GitHubIssueDto.builder()
-                .id(issueDto.getId())
-                .tittle(issueDto.getTitle())
+                .number(issueDto.getId())
+                .title(issueDto.getTitle())
                 .body(issueDto.getDescription())
-                .asignees(issueDto.getAsignees())
+                .assignees(issueDto.getAssignees())
                 .labels(issueDto.getLabels())
                 .build();
     }
