@@ -59,7 +59,7 @@ public class GitHubIssueGatewayTest {
 
     @Test
     public void listAllIssues() throws Exception {
-        gitHubIssueGateway.listAllIssues();
+        gitHubIssueGateway.listAllIssues("user", "repo");
         verify(restTemplate).exchange(anyString(),
                 eq(HttpMethod.GET),
                 eq(null),
@@ -68,21 +68,8 @@ public class GitHubIssueGatewayTest {
 
     @Test
     public void getIssue() throws Exception {
-        gitHubIssueGateway.getIssue("someId");
+        gitHubIssueGateway.getIssue("user", "repo", "someId");
         verify(restTemplate).getForEntity(anyString(), any(Class.class));
-    }
-
-    @Test
-    public void createIssue() throws Exception {
-        gitHubIssueGateway.createIssue(ISSUE_DTO);
-        verify(issueMapper).map(ISSUE_DTO);
-        verify(restTemplate).postForEntity(anyString(), any(GitHubIssueDto.class), any(Class.class));
-    }
-
-    @Test
-    public void deleteIssue() throws Exception {
-        gitHubIssueGateway.deleteIssue("someId");
-        verify(restTemplate).delete(anyString());
     }
 
 }

@@ -20,22 +20,13 @@ public class IssueController {
     }
 
     @GetMapping("/{id}")
-    public IssueDto getIssue(@PathVariable("id") String id) {
-        return issueService.getIssue(id);
+    public IssueDto getIssue(@PathVariable("id") String id, @RequestParam("user") String user, @RequestParam("repo") String repo) {
+        return issueService.getIssue(user, repo, id);
     }
 
     @GetMapping
-    public List<IssueDto> getAllIssues() {
-        return issueService.getAllIssues();
+    public List<IssueDto> getAllIssues(@RequestParam("user") String user, @RequestParam("repo") String repo) {
+        return issueService.getAllIssues(user, repo);
     }
 
-    @PostMapping
-    public IssueDto createIssue(IssueDto issueDto) {
-        return issueService.createIssue(issueDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteIssue(@PathVariable("id") String id) {
-        issueService.deleteIssue(id);
-    }
 }

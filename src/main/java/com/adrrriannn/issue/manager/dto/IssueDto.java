@@ -1,8 +1,6 @@
 package com.adrrriannn.issue.manager.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,13 +9,15 @@ import java.util.List;
  */
 @Builder
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class IssueDto {
 
     @Getter
     private String id;
 
     @Getter
-    private String tittle;
+    private String title;
 
     @Getter
     private String description;

@@ -34,33 +34,20 @@ public class IssueControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        doReturn(Arrays.asList(ISSUE_DTO)).when(issueService).getAllIssues();
-        doReturn(ISSUE_DTO).when(issueService).getIssue(anyString());
-        doNothing().when(issueService).deleteIssue(anyString());
-        doAnswer(returnsFirstArg()).when(issueService).createIssue(any());
+        doReturn(Arrays.asList(ISSUE_DTO)).when(issueService).getAllIssues(anyString(), anyString());
+        doReturn(ISSUE_DTO).when(issueService).getIssue(anyString(), anyString(), anyString());
     }
 
     @Test
     public void listAllIssues() {
-        issueController.getAllIssues();
-        Mockito.verify(issueService).getAllIssues();
+        issueController.getAllIssues("user", "repo");
+        Mockito.verify(issueService).getAllIssues("user", "repo");
     }
 
     @Test
     public void getIssue() {
-        IssueDto issueDto = issueController.getIssue("id");
-        Mockito.verify(issueService).getIssue("id");
+        IssueDto issueDto = issueController.getIssue("user", "repo","id");
+        Mockito.verify(issueService).getIssue(anyString(), anyString(), anyString());
     }
 
-    @Test
-    public void createIssue() {
-        IssueDto createdIssue = issueController.createIssue(ISSUE_DTO);
-        Mockito.verify(issueService).createIssue(ISSUE_DTO);
-    }
-
-    @Test
-    public void deleteIssue() {
-        issueController.deleteIssue("id");
-        Mockito.verify(issueService).deleteIssue("id");
-    }
 }

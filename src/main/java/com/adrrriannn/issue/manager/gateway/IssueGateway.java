@@ -9,11 +9,7 @@ import java.util.List;
 public interface IssueGateway
 {
 
-    List<IssueDto> listAllIssues();
+    List<IssueDto> listAllIssues(String user, String repo);
 
-    IssueDto getIssue(String id);
-
-    IssueDto createIssue(IssueDto issueDto);
-
-    void deleteIssue(String id);
+    IssueDto getIssue(String user, String repo, String id);
 }

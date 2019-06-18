@@ -19,22 +19,12 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<IssueDto> getAllIssues() {
-        return issueGateway.listAllIssues();
+    public List<IssueDto> getAllIssues(String user, String repo) {
+        return issueGateway.listAllIssues(user, repo);
     }
 
     @Override
-    public void deleteIssue(String id) {
-        issueGateway.deleteIssue(id);
-    }
-
-    @Override
-    public IssueDto createIssue(IssueDto issueDto) {
-        return issueGateway.createIssue(issueDto);
-    }
-
-    @Override
-    public IssueDto getIssue(String id) {
-        return issueGateway.getIssue(id);
+    public IssueDto getIssue(String user, String repo, String id) {
+        return issueGateway.getIssue(user, repo, id);
     }
 }

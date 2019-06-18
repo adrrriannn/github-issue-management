@@ -14,7 +14,7 @@ public class GitHubIssueMapper implements IssueMapper<GitHubIssueDto> {
     public IssueDto map(GitHubIssueDto externalIssueDto) {
         return IssueDto.builder()
                 .id(externalIssueDto.getId())
-                .tittle(externalIssueDto.getTittle())
+                .title(externalIssueDto.getTittle())
                 .description(externalIssueDto.getBody())
                 .asignees(externalIssueDto.getAsignees())
                 .labels(externalIssueDto.getLabels())
@@ -25,7 +25,7 @@ public class GitHubIssueMapper implements IssueMapper<GitHubIssueDto> {
     public GitHubIssueDto map(IssueDto issueDto) {
         return GitHubIssueDto.builder()
                 .id(issueDto.getId())
-                .tittle(issueDto.getTittle())
+                .tittle(issueDto.getTitle())
                 .body(issueDto.getDescription())
                 .asignees(issueDto.getAsignees())
                 .labels(issueDto.getLabels())

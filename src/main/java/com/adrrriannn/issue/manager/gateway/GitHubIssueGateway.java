@@ -9,8 +9,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,9 +36,14 @@ public class GitHubIssueGateway implements IssueGateway {
     }
 
     @Override
-    public List<IssueDto> listAllIssues() {
+    public List<IssueDto> listAllIssues(String user, String repo) {
+
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("user", user);
+        uriParams.put("repo", repo);
+        String url = UriComponentsBuilder.fromUriString(gitHubIssueApiUrl).build(uriParams).toString();
         ResponseEntity<List<GitHubIssueDto>> responseEntity =
-            restTemplate.exchange(gitHubIssueApiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<GitHubIssueDto>>(){});
+            restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<GitHubIssueDto>>(){});
         
         return responseEntity.getBody().stream()
                 .map(gitHubIssueMapper::map)
@@ -43,26 +51,15 @@ public class GitHubIssueGateway implements IssueGateway {
     }
 
     @Override
-    public IssueDto getIssue(String id) {
+    public IssueDto getIssue(String user, String repo, String id) {
+        Map<String, String> uriParams = new HashMap<>();
+        uriParams.put("user", user);
+        uriParams.put("repo", repo);
+        String url = UriComponentsBuilder.fromUriString(gitHubIssueApiUrl).build(uriParams).toString();
+
         ResponseEntity<GitHubIssueDto> responseEntity =
-                restTemplate.getForEntity(gitHubIssueApiUrl + id, GitHubIssueDto.class);
+                restTemplate.getForEntity(url + id, GitHubIssueDto.class);
         
         return gitHubIssueMapper.map(responseEntity.getBody()); 
-    }
-
-    @Override
-    public IssueDto createIssue(IssueDto issueDto) {
-        
-        GitHubIssueDto gitHubIssueDto = gitHubIssueMapper.map(issueDto);
-        
-        ResponseEntity<GitHubIssueDto> responseEntity =
-                restTemplate.postForEntity(gitHubIssueApiUrl, gitHubIssueDto, GitHubIssueDto.class);
-
-        return gitHubIssueMapper.map(responseEntity.getBody());
-    }
-
-    @Override
-    public void deleteIssue(String id) {
-        restTemplate.delete(gitHubIssueApiUrl + id);
     }
 }
